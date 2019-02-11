@@ -5,6 +5,25 @@ void display(int*);
 void init(int*);
 void insert(int*, int pos, int num);
 void delete(int *, int pos);
+void reverse(int*);
+void search(int*, int num);
+
+void search(int* array, int num)
+{
+	int idx;
+	for(idx=0; idx<MAX; idx++)
+	{
+		if(array[idx] == num)
+		{
+			printf("%d found in position %d\n", num, idx+1);
+			return;
+		}
+	}
+	if(idx == MAX)
+	{
+		printf("%d not found in array\n", num);
+	}
+}
 
 void init(int* array)
 {
@@ -12,6 +31,17 @@ void init(int* array)
 	for(idx=0; idx < MAX; idx++)
 	{
 		array[idx] = 0;
+	}
+}
+
+void reverse(int* array)
+{
+	int idx;
+	for(idx=0; idx<MAX/2; idx++)
+	{
+		int temp = array[idx];
+		array[idx] = array[MAX-1-idx];
+		array[MAX-1-idx] = temp;
 	}
 }
 
@@ -52,6 +82,29 @@ void display(int* array)
 	printf("\n");
 }
 
+struct stack 
+{
+	int array[MAX];
+	int top;
+};
+
+void init_stack(struct stack *s)
+{
+	s->top = -1;
+}
+
+void push(struct stack *s)
+{
+	if(s->top == MAX-1)
+	{
+		printf("Stack is full. Couldn't push '%d' onto stack\n", item);
+		return;
+	}
+	s->top++;
+	s->array[s->top] = item;
+}
+	
+
 
 
 
@@ -78,6 +131,14 @@ int main(void)
 	
 	printf("Array Insertion: \n");
 	display(array);
+	
+	reverse(array);
+	
+	printf("After Reversal: \n");
+	display(array);
+	
+	search(array, 222);
+	search(array, 666);
 	
 	return 0;
 }
